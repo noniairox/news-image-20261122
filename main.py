@@ -1,13 +1,17 @@
 import os
 import shutil
+import sys
+
+sys.dont_write_bytecode = True
 
 
 def main():
-    out = os.environ.get("MAKEFUN_OUTPUT_DIR", "out")
-    os.makedirs(out, exist_ok=True)
+    # Copy the front page image to the grader's output dir.
     here = os.path.dirname(os.path.abspath(__file__))
-    shutil.copyfile(os.path.join(here, "entry.png"),
-                    os.path.join(out, "entry.png"))
+    src = os.path.join(here, "entry.png")
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
+    os.makedirs(out_dir, exist_ok=True)
+    shutil.copyfile(src, os.path.join(out_dir, "entry.png"))
 
 
 if __name__ == "__main__":
